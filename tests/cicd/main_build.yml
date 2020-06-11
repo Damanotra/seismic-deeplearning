@@ -169,11 +169,11 @@ jobs:
 
       # check validation set performance
       set -e
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_patch_deconvnet_no_depth.json
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_unet_section_depth.json
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_seresnet_unet_section_depth.json
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_patch_deconvnet_no_depth.json
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_unet_section_depth.json
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_seresnet_unet_section_depth.json
       # TODO: enable HRNet test set metrics when we debug HRNet
-      # python ../../../../tests/cicd/src/check_performance.py --infile metrics_hrnet_section_depth.json
+      # python ../../../tests/cicd/src/check_performance.py --infile metrics_hrnet_section_depth.json
       set +e
       echo "All models finished training - start scoring"
 
@@ -258,11 +258,11 @@ jobs:
 
       # check test set performance
       set -e
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_test_patch_deconvnet_no_depth.json --test
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_test_unet_section_depth.json --test
-      python ../../../../tests/cicd/src/check_performance.py --infile metrics_test_seresnet_unet_section_depth.json --test
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_test_patch_deconvnet_no_depth.json --test
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_test_unet_section_depth.json --test
+      python ../../../tests/cicd/src/check_performance.py --infile metrics_test_seresnet_unet_section_depth.json --test
       # TODO: enable HRNet test set metrics when we debug HRNet
-      # python ../../../../tests/cicd/src/check_performance.py --infile metrics_test_hrnet_section_depth.json --test
+      # python ../../../tests/cicd/src/check_performance.py --infile metrics_test_hrnet_section_depth.json --test
       
       echo "PASSED"
 
