@@ -87,20 +87,16 @@ Please make sure you have enough disk space to download either dataset.
 
 We have experiments and notebooks which use either one dataset or the other. Depending on which experiment/notebook you want to run you'll need to download the corresponding dataset. We suggest you start by looking at [HRNet demo notebook](https://github.com/microsoft/seismic-deeplearning/blob/master/examples/interpretation/notebooks/Dutch_F3_patch_model_training_and_evaluation.ipynb) which requires the Dutch F3 dataset.
 
-#### Dutch F3 Netherlands dataset prep
-To download the Netherlands Dutch F3 dataset for 2D experiments, please follow the data download instructions at
+#### Dutch F3 dataset prep
+To download the Dutch F3 dataset for 2D experiments, please follow the data download instructions at
 [this github repository](https://github.com/yalaudah/facies_classification_benchmark) (section Dataset). Atternatively, you can use the [download script](scripts/download_dutch_f3.sh)
 
-```
+```bash
 data_dir="$HOME/data/dutch"
 mkdir -p "${data_dir}"
 ./scripts/download_dutch_f3.sh "${data_dir}"
 ```
-
-Download scripts also automatically create any subfolders in `${data_dir}` which are needed for the data preprocessing scripts.
-
-At this point, your `${data_dir}` directory should contain a `data` folder, which should look like this:
-
+Download scripts also automatically create any subfolders in `${data_dir}` which are needed for the data preprocessing scripts. At this point, your `${data_dir}` directory should contain a `data` folder, which should look like this:
 ```bash
 data
 ├── splits
@@ -113,9 +109,7 @@ data
     ├── train_labels.npy
     └── train_seismic.npy
 ```
-
 To prepare the data for the experiments (e.g. split into train/val/test), please run the following script:
-
 ```bash
 # change working directory to scripts folder
 cd scripts
@@ -130,7 +124,6 @@ python prepare_dutchf3.py split_train_val section --data-dir=${data_dir}/data --
 # go back to repo root
 cd ..
 ```
-
 Refer to the script itself for more argument options.
 
 ### Run Examples
@@ -139,18 +132,15 @@ Refer to the script itself for more argument options.
 We provide example notebooks under `examples/interpretation/notebooks/` to demonstrate how to train seismic interpretation models and evaluate them on Penobscot and F3 datasets. 
 
 Make sure to run the notebooks in the conda environment we previously set up (`seismic-interpretation`). To register the conda environment in Jupyter, please run:
-
 ```
 python -m ipykernel install --user --name seismic-interpretation
 ```
-
 __Optional__: if you plan to develop a notebook, you can install black formatter with the following commands:
 ```bash
 conda activate seismic-interpretation
 jupyter nbextension install https://github.com/drillan/jupyter-black/archive/master.zip --user
 jupyter nbextension enable jupyter-black-master/jupyter-black
 ```
-
 This will enable your notebook with a Black formatter button, which then clicked will automatically format a notebook cell which you're in.
 
 #### Experiments
@@ -166,13 +156,11 @@ We use [YACS](https://github.com/rbgirshick/yacs) configuration library to manag
 - __default.py__ - A project config file `default.py` is a one-stop reference point for all configurable options, and provides sensible defaults for all arguments. If no arguments are passed to `train.py` or `test.py` script (e.g. `python train.py`), the arguments are by default loaded from `default.py`. Please take a look at `default.py` to familiarize yourself with the experiment arguments the script you run uses.
 
 - __yml config files__ - YAML configuration files under `configs/` are typically created one for each experiment. These are meant to be used for repeatable experiment runs and reproducible settings. Each configuration file only overrides the options that are changing in that experiment (e.g. options loaded from `defaults.py` during an experiment run will be overridden by arguments loaded from the yaml file). As an example, to use yml configuration file with the training script, run:
-
     ```
     python train.py --cfg "configs/seresnet_unet.yaml"
     ```
 
 - __command line__ - Finally, options can be passed in through `options` argument, and those will override arguments loaded from the configuration file. We created CLIs for all our scripts (using Python Fire library), so you can pass these options via command-line arguments, like so:
-
     ```
     python train.py DATASET.ROOT "/home/username/data/dutch/data" TRAIN.END_EPOCH 10
     ```
@@ -234,8 +222,7 @@ This section contains benchmarks of different algorithms for seismic interpretat
 
 #### Reproduce benchmarks
 In order to reproduce the benchmarks, you will need to navigate to the [experiments](experiments) folder. In there, each of the experiments are split into different folders. To run the Dutch F3 experiment navigate to the [dutchf3_patch](experiments/interpretation/dutchf3_patch/) folder. In there is a training script [train.sh](experiments/interpretation/dutchf3_patch/train.sh)
-which will run the training for any configuration you pass in. If your machine has multiple GPUs, you can run distributed training using the distributed training script [train_distributed.sh](experiments/interpretation/dutchf3_patch/train_distributed.sh). Once you have run the training you will need to run the [test.sh](experiments/interpretation/dutchf3_patch/test.sh) script. Make sure you specify
-the path to the best performing model from your training run, either by passing it in as an argument or altering the YACS config file. 
+which will run the training for any configuration you pass in. If your machine has multiple GPUs, you can run distributed training using the distributed training script [train_distributed.sh](experiments/interpretation/dutchf3_patch/train_distributed.sh). Once you have run the training you will need to run the [test.sh](experiments/interpretation/dutchf3_patch/test.sh) script. Make sure you specify the path to the best performing model from your training run, either by passing it in as an argument or altering the YACS config file. 
 
 ## Contributing
 
@@ -288,11 +275,11 @@ which will indicate that anaconda folder is `__/anaconda__`. We'll refer to this
   <summary><b>Data Science Virtual Machine conda package installation warnings</b></summary>
 
   It could happen that while creating the conda environment defined by `environment/anaconda/local/environment.yml` on an Ubuntu DSVM, one can get multiple warnings like so:
-  ```
+  ```bash
   WARNING conda.gateways.disk.delete:unlink_or_rename_to_trash(140): Could not remove or rename /anaconda/pkgs/ipywidgets-7.5.1-py_0/site-packages/ipywidgets-7.5.1.dist-info/LICENSE.  Please remove this file manually (you may need to reboot to free file handles)  
   ```
     
-  If this happens, similar to instructions above, stop the conda environment creation (type ```Ctrl+C```) and then change recursively the ownership /anaconda directory from root to current user, by running this command: 
+  If this happens, similar to instructions above, stop the conda environment creation (type ```Ctrl+C```) and then change recursively the ownership `/anaconda` directory from root to current user, by running this command: 
 
   ```bash
   sudo chown -R $USER /anaconda
@@ -322,17 +309,14 @@ which will indicate that anaconda folder is `__/anaconda__`. We'll refer to this
   torch.cuda.is_available() 
   ```
 
-  The output should say "True".
-
-  If the output is still "False", you may want to try setting your environment variable to specify the device manually - to test this, start a new `ipython` session and type:
+  The output should say `True`. If the output is still `False`, you may want to try setting your environment variable to specify the device manually - to test this, start a new `ipython` session and type:
   ```python
   import os
   os.environ['CUDA_VISIBLE_DEVICES']='0'
   import torch                                                                                  
   torch.cuda.is_available() 
   ```
-
-  The output should say "True" this time. If it does, you can make the change permanent by adding
+  The output should say `True` this time. If it does, you can make the change permanent by adding:
   ```bash
   export CUDA_VISIBLE_DEVICES=0
   ```
