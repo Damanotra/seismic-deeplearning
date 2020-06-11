@@ -88,7 +88,7 @@ Please make sure you have enough disk space to download either dataset.
 We have experiments and notebooks which use either one dataset or the other. Depending on which experiment/notebook you want to run you'll need to download the corresponding dataset. We suggest you start by looking at [HRNet demo notebook](https://github.com/microsoft/seismic-deeplearning/blob/master/examples/interpretation/notebooks/Dutch_F3_patch_model_training_and_evaluation.ipynb) which requires the Dutch F3 dataset.
 
 #### Dutch F3 Netherlands dataset prep
-To download the F3 Netherlands dataset for 2D experiments, please follow the data download instructions at
+To download the Netherlands Dutch F3 dataset for 2D experiments, please follow the data download instructions at
 [this github repository](https://github.com/yalaudah/facies_classification_benchmark) (section Dataset). Atternatively, you can use the [download script](scripts/download_dutch_f3.sh)
 
 ```
@@ -101,7 +101,7 @@ Download scripts also automatically create any subfolders in `${data_dir}` which
 
 At this point, your `${data_dir}` directory should contain a `data` folder, which should look like this:
 
-```
+```bash
 data
 ├── splits
 ├── test_once
@@ -116,7 +116,7 @@ data
 
 To prepare the data for the experiments (e.g. split into train/val/test), please run the following script:
 
-```
+```bash
 # change working directory to scripts folder
 cd scripts
 
@@ -155,10 +155,10 @@ This will enable your notebook with a Black formatter button, which then clicked
 
 #### Experiments
 
-We also provide scripts for a number of experiments we conducted using different segmentation approaches. These experiments are available under `experiments/interpretation`, and can be used as examples. Within each experiment start from the `train.sh` and `test.sh` scripts under the `local/` directory, which invoke the corresponding python scripts, `train.py` and `test.py`. Take a look at the experiment configurations (see Experiment Configuration Files section below) for experiment options and modify if necessary.
+We also provide scripts for a number of experiments we conducted using different segmentation approaches. These experiments are available under `experiments/interpretation`, and can be used as examples. Within each experiment start from the `train.sh` and `test.sh` scripts which invoke the corresponding python scripts, `train.py` and `test.py`. Take a look at the experiment configurations (see Experiment Configuration Files section below) for experiment options and modify if necessary.
 
-This release currently supports Dutch F3 local execution
-- [F3 Netherlands Patch](experiments/interpretation/dutchf3_patch/README.md)
+This release currently supports Dutch F3 local and distributed training
+- [Dutch F3 Patch](experiments/interpretation/dutchf3_patch/README.md)
 
 #### Configuration Files
 We use [YACS](https://github.com/rbgirshick/yacs) configuration library to manage configuration options for the experiments. There are three ways to pass arguments to the experiment scripts (e.g. train.py or test.py):
@@ -233,8 +233,8 @@ This section contains benchmarks of different algorithms for seismic interpretat
 
 
 #### Reproduce benchmarks
-In order to reproduce the benchmarks, you will need to navigate to the [experiments](experiments) folder. In there, each of the experiments are split into different folders. To run the Netherlands F3 experiment navigate to the [dutchf3_patch/local](experiments/interpretation/dutchf3_patch/local) folder. In there is a training script [([train.sh](experiments/interpretation/dutchf3_patch/local/train.sh))
-which will run the training for any configuration you pass in. Once you have run the training you will need to run the [test.sh](experiments/interpretation/dutchf3_patch/local/test.sh) script. Make sure you specify
+In order to reproduce the benchmarks, you will need to navigate to the [experiments](experiments) folder. In there, each of the experiments are split into different folders. To run the Dutch F3 experiment navigate to the [dutchf3_patch](experiments/interpretation/dutchf3_patch/) folder. In there is a training script [train.sh](experiments/interpretation/dutchf3_patch/train.sh)
+which will run the training for any configuration you pass in. If your machine has multiple GPUs, you can run distributed training using the distributed training script [train_distributed.sh](experiments/interpretation/dutchf3_patch/train_distributed.sh). Once you have run the training you will need to run the [test.sh](experiments/interpretation/dutchf3_patch/test.sh) script. Make sure you specify
 the path to the best performing model from your training run, either by passing it in as an argument or altering the YACS config file. 
 
 ## Contributing
